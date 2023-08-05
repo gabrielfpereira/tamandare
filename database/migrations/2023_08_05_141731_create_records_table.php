@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('records', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->foreignIdFor(User::class, 'author');
-            $table->foreignIdFor(Student::class, 'student');
+            $table->foreignId('user_id');
+            $table->foreignId('student_id');
             $table->timestamps();
         });
     }
