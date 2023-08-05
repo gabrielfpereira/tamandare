@@ -9,7 +9,9 @@ class RecordController extends Controller
 {
     public function index()
     {
-        return view('records.index');
+        $records = Record::with('student')->paginate();
+
+        return view('records.index', compact('records'));
     }
 
     public function store(StoreRecordRequest $request)
