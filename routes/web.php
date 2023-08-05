@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RecordController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/students', [StudentController::class, 'store'])->name('students.store');
+    Route::post('/records', [RecordController::class, 'store'])->name('records.store');
+    Route::get('/records', [RecordController::class, 'index'])->name('records.index');
 });
 
 require __DIR__ . '/auth.php';
