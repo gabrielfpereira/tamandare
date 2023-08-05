@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRecordRequest;
 use App\Models\Record;
-use Illuminate\Http\Request;
 
 class RecordController extends Controller
 {

@@ -1,13 +1,11 @@
 <?php
 
-use App\Models\Student;
-use App\Models\User;
+use App\Models\{Student, User};
 
-use function Pest\Laravel\actingAs;
-use function Pest\Laravel\get;
+use function Pest\Laravel\{actingAs, get};
 
 it('should be able see students list', function () {
-    $user = User::factory()->create();
+    $user     = User::factory()->create();
     $students = Student::factory(5)->create();
 
     actingAs($user);

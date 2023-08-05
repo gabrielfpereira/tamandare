@@ -1,13 +1,8 @@
 <?php
 
-use App\Models\Item;
-use App\Models\Student;
-use App\Models\User;
+use App\Models\{Item, Student, User};
 
-use function Pest\Laravel\actingAs;
-use function Pest\Laravel\assertDatabaseCount;
-use function Pest\Laravel\assertDatabaseHas;
-use function Pest\Laravel\post;
+use function Pest\Laravel\{actingAs, assertDatabaseCount, assertDatabaseHas, post};
 
 it('should be able create a record', function () {
     $user = User::factory()->create();
@@ -17,9 +12,9 @@ it('should be able create a record', function () {
     actingAs($user);
 
     post(route('records.store'), [
-        'type' => 'Medida',
+        'type'       => 'Medida',
         'student_id' => 1,
-        'items' => [1,2,3],
+        'items'      => [1, 2, 3],
     ])->assertRedirect(route('records.index'));
 
     assertDatabaseHas('students', ['id' => 1]);

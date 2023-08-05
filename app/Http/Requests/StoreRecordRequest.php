@@ -22,9 +22,9 @@ class StoreRecordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['required'],
+            'type'       => ['required'],
             'student_id' => ['required'],
-            'items' => ['required'],
+            'items'      => ['required'],
         ];
     }
 }

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Record extends Model
 {
     use HasFactory;
-    protected $fillable = ['type', 'user_id','student_id'];
+
+    protected $fillable = ['type', 'user_id', 'student_id'];
 
     public function items()
     {
