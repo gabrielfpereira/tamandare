@@ -12,9 +12,10 @@ it('should be able create a record', function () {
     actingAs($user);
 
     post(route('records.store'), [
-        'type'       => 'Medida',
-        'student_id' => 1,
-        'items'      => [1, 2, 3],
+        'type'          => 'Medida',
+        'name_student'  => 'Pedro Silva',
+        'class_student' => '7202',
+        'items'         => [1, 2, 3],
     ])->assertRedirect(route('records.index'));
 
     assertDatabaseHas('students', ['id' => 1]);

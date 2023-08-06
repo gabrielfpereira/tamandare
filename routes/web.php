@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{ProfileController, RecordController, StudentController};
+use App\Http\Controllers\{ItemController, ProfileController, RecordController, StudentController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,9 +33,16 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/students', [StudentController::class, 'store'])->name('students.store');
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+    Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
 
     Route::post('/records', [RecordController::class, 'store'])->name('records.store');
     Route::get('/records', [RecordController::class, 'index'])->name('records.index');
+    Route::get('/records/create', [RecordController::class, 'create'])->name('records.create');
+    Route::get('/records/{record}', [RecordController::class, 'show'])->name('records.show');
+
+    Route::get('/items', [ItemController::class, 'index'])->name('items.index');
+    Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
+    Route::post('/items', [ItemController::class, 'store'])->name('items.store');
 });
 
 require __DIR__ . '/auth.php';

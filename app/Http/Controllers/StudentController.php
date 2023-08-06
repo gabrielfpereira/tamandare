@@ -14,10 +14,15 @@ class StudentController extends Controller
         return view('students.index', compact('students'));
     }
 
+    public function create()
+    {
+        return view('students.create');
+    }
+
     public function store(StoreStudentRequest $request)
     {
         Student::query()->create($request->validated());
 
-        return back();
+        return to_route('students.index')->with('success', 'Student created successfully');
     }
 }
