@@ -34,6 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/students', [StudentController::class, 'store'])->name('students.store');
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
     Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
+    Route::get('/students/{student}', [StudentController::class, 'edit'])->name('students.edit');
+    Route::put('/students/{student}', [StudentController::class, 'update'])->name('students.update');
 
     Route::post('/records', [RecordController::class, 'store'])->name('records.store');
     Route::get('/records', [RecordController::class, 'index'])->name('records.index');
