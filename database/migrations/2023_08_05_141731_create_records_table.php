@@ -14,8 +14,8 @@ return new class () extends Migration {
         Schema::create('records', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->foreignId('user_id');
-            $table->foreignId('student_id');
+            $table->foreignId('user_id')->cascadeOnDelete();
+            $table->foreignId('student_id')->cascadeOnDelete();
             $table->timestamps();
         });
     }
