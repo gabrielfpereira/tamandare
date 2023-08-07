@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
             {{ __('Registros') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
                     <div class="flex justify-end mb-6">
@@ -62,7 +62,15 @@
                                     
                                     <td class="px-6 py-4">
                                         <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Excluir</a>
+                                        
+                                        @can('delete', $record)
+                                            <form  action="{{ route('records.destroy', $record)}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button onclick="submitForm(event.target.parentElement)" type="button" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Excluir</button>
+                                            </form>
+                                        @endcan
+
                                         <a href="{{ route('records.show', $record) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ver</a>
                                     </td>
                                 </tr>
@@ -75,4 +83,22 @@
             </div>
         </div>
     </div>
+
+    @if (session()->has('success'))
+        <x-alert-success>{{ session('success') }}</x-alert-success>
+    @endif
+
+    <x-delete-modal />
+
+    @push('js')
+        <script>
+            function submitForm(e){
+                e.target.preventDefault
+                
+                document.getElementById('confirm-delete').addEventListener('click', function(){
+                    e.submit()
+                })
+            }
+        </script>
+    @endpush
 </x-app-layout>

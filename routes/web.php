@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if(app()->isLocal()) {
-        auth()->loginUsingId(1);
+        auth()->loginUsingId(2);
     }
 
     return redirect()->route('dashboard');
@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/records', [RecordController::class, 'index'])->name('records.index');
     Route::get('/records/create', [RecordController::class, 'create'])->name('records.create');
     Route::get('/records/{record}', [RecordController::class, 'show'])->name('records.show');
+    Route::delete('/records/{record}', [RecordController::class, 'destroy'])->name('records.destroy');
 
     Route::get('/items', [ItemController::class, 'index'])->name('items.index');
     Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
