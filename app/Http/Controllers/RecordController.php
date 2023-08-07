@@ -53,4 +53,13 @@ class RecordController extends Controller
         return view('records.show', compact('record'));
 
     }
+
+    public function destroy(Record $record): RedirectResponse
+    {
+        $this->authorize('delete', $record);
+
+        $record->delete();
+
+        return redirect()->route('records.index')->with('success', 'Record deleted');
+    }
 }
