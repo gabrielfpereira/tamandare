@@ -72,6 +72,7 @@
                                         @endcan
 
                                         <a href="{{ route('records.show', $record) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ver</a>
+                                        <a href="{{ route('records.print', $record) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Imprimir</a>
                                     </td>
                                 </tr>
                             @endforeach
