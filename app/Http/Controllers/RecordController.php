@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRecordRequest;
 use App\Models\{Item, Record, Student};
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\{RedirectResponse, Response};
 
 class RecordController extends Controller
 {
@@ -61,5 +62,12 @@ class RecordController extends Controller
         $record->delete();
 
         return redirect()->route('records.index')->with('success', 'Record deleted');
+    }
+
+    public function print(Record $record): Response
+    {
+        $pdf = Pdf::loadView('records.print.record', compact('record'));
+
+        return $pdf->stream();
     }
 }
