@@ -11,7 +11,9 @@ class StudentController extends Controller
 {
     public function index(): View
     {
-        $students = Student::paginate();
+        $students = Student::query()
+            ->when(request('search'), fn ($query, $search) => $query->where('name', 'like', "%{$search}%"))
+            ->paginate();
 
         return view('students.index', compact('students'));
     }

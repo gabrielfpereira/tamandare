@@ -80,6 +80,10 @@
                         </table>
                     </div>
 
+                    <div class="mt-3">
+                        {{ $records->withQueryString()->links() }}
+                    </div>
+
                 </div>
             </div>
         </div>
