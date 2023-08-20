@@ -12,7 +12,29 @@ class RecordController extends Controller
 {
     public function index(): View
     {
-        $records = Record::with('student')->paginate();
+        $records = Record::query()
+                        ->when(request('search'), function ($query, $search) {
+                            $students = Student::where('name', 'LIKE', "%{$search}%")->get();
+
+                            if ($students->isNotEmpty()) {
+                                $query->whereIn('student_id', $students->pluck('id'));
+                            }
+
+                            return $query;
+                        })
+                        ->when(request('search_class'), function ($query, $class) {
+                            $students = Student::where('class', 'LIKE', "%{$class}%")->get();
+
+                            if ($students->isNotEmpty()) {
+                                $query->whereIn('student_id', $students->pluck('id'));
+                            }
+
+                            return $query;
+                        })
+                        ->when(request('search_date'), function ($query, $date) {
+                            return $query->whereDate('created_at', $date);
+                        })
+                        ->paginate();
 
         return view('records.index', compact('records'));
     }
