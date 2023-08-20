@@ -22,6 +22,15 @@ class RecordController extends Controller
 
                             return $query;
                         })
+                        ->when(request('search_class'), function ($query, $class) {
+                            $students = Student::where('class', 'LIKE', "%{$class}%")->get();
+
+                            if ($students->isNotEmpty()) {
+                                $query->whereIn('student_id', $students->pluck('id'));
+                            }
+
+                            return $query;
+                        })
                         ->paginate();
 
         return view('records.index', compact('records'));

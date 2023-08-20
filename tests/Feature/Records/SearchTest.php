@@ -32,3 +32,32 @@ it('should search records by name of student', function () {
     $response->assertDontSee($student2->name);
 
 });
+
+it('should search records by class of student', function () {
+    $user     = User::factory()->create();
+    $student1 = Student::factory()->create(['name' => 'John Doe', 'class' => '1201']);
+    $student2 = Student::factory()->create(['name' => 'Ken Doe', 'class' => '1202']);
+
+    Record::factory()->create([
+        'user_id'    => $user->id,
+        'student_id' => $student1->id,
+        'type'       => 'Medida',
+    ]);
+
+    Record::factory()->create([
+        'user_id'    => $user->id,
+        'student_id' => $student2->id,
+        'type'       => 'Medida',
+    ]);
+
+    actingAs($user);
+
+    $response = get(route('records.index', [
+        'search_class' => '1201',
+    ]))->assertOk();
+
+    $response->assertSee($student1->class);
+
+    $response->assertDontSee($student2->class);
+
+});
