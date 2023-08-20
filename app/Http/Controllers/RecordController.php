@@ -31,6 +31,9 @@ class RecordController extends Controller
 
                             return $query;
                         })
+                        ->when(request('search_date'), function ($query, $date) {
+                            return $query->whereDate('created_at', $date);
+                        })
                         ->paginate();
 
         return view('records.index', compact('records'));

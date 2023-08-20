@@ -61,3 +61,36 @@ it('should search records by class of student', function () {
     $response->assertDontSee($student2->class);
 
 });
+
+it('should search records by date', function () {
+    $user     = User::factory()->create();
+    $student1 = Student::factory()->create(['name' => 'John Doe']);
+    $student2 = Student::factory()->create(['name' => 'Ken Doe']);
+
+    Record::factory()->create([
+        'user_id'    => $user->id,
+        'student_id' => $student1->id,
+        'type'       => 'Medida',
+        'created_at' => now()->subDays(2),
+    ]);
+
+    Record::factory()->create([
+        'user_id'    => $user->id,
+        'student_id' => $student2->id,
+        'type'       => 'Medida',
+        'created_at' => now()->subDays(1),
+    ]);
+
+    actingAs($user);
+
+    $response = get(route('records.index', [
+        'search_date' => now()->subDays(1)->format('Y-m-d'),
+    ]));
+
+    $response->assertOk();
+
+    $response->assertSee($student2->name);
+
+    $response->assertDontSee($student1->name);
+
+});
