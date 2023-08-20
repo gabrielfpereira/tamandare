@@ -12,7 +12,17 @@ class RecordController extends Controller
 {
     public function index(): View
     {
-        $records = Record::with('student')->paginate();
+        $records = Record::query()
+                        ->when(request('search'), function ($query, $search) {
+                            $students = Student::where('name', 'LIKE', "%{$search}%")->get();
+
+                            if ($students->isNotEmpty()) {
+                                $query->whereIn('student_id', $students->pluck('id'));
+                            }
+
+                            return $query;
+                        })
+                        ->paginate();
 
         return view('records.index', compact('records'));
     }
