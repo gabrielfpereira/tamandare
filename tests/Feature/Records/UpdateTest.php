@@ -1,14 +1,11 @@
 <?php
 
-use App\Models\Record;
-use App\Models\User;
+use App\Models\{Record, User};
 
-use function Pest\Laravel\actingAs;
-use function Pest\Laravel\assertDatabaseHas;
-use function Pest\Laravel\put;
+use function Pest\Laravel\{actingAs, assertDatabaseHas, put};
 
 it('should update the status of a record', function () {
-    $user = User::factory()->create();
+    $user   = User::factory()->create();
     $record = Record::factory()->create(['status' => 'pending']);
 
     actingAs($user);
@@ -20,10 +17,10 @@ it('should update the status of a record', function () {
     $record->refresh();
 
     expect($record->status)->toBe('accepted');
-    
+
     assertDatabaseHas('records', [
-        'id' => $record->id,
+        'id'     => $record->id,
         'status' => 'accepted',
     ]);
-    
+
 });

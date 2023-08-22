@@ -26,4 +26,15 @@ class Record extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function statusList(): array
+    {
+        return [
+            'pending'   => 'Pendente',
+            'accepted'  => 'Aceito',
+            'printed'   => 'Impresso',
+            'delivered' => 'Entregue',
+        ];
+    }
+
 }

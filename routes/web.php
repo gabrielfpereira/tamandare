@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/records/{record}', [RecordController::class, 'destroy'])->name('records.destroy');
     Route::get('/records/print/{record}', [RecordController::class, 'print'])->name('records.print');
     Route::put('/records/{record}', [RecordController::class, 'update'])->name('records.update');
+    route::get('/records/{record}/edit', [RecordController::class, 'edit'])->name('records.edit');
 
     Route::get('/items', [ItemController::class, 'index'])->name('items.index');
     Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');

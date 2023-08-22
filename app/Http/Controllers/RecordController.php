@@ -93,12 +93,22 @@ class RecordController extends Controller
         return $pdf->stream();
     }
 
+    public function edit(Record $record): View
+    {
+        $record = Record::query()
+                        ->with('student')
+                        ->with('items')
+                        ->find($record->id);
+
+        return view('records.edit', compact('record'));
+    }
+
     public function update(Record $record, Request $request): RedirectResponse
     {
         $data = $request->validate([
             'status' => 'required',
         ]);
-        
+
         $record->update($data);
 
         return redirect()->route('records.index');
