@@ -10,7 +10,7 @@ class Record extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['type', 'user_id', 'student_id'];
+    protected $fillable = ['type', 'user_id', 'student_id', 'status'];
 
     public function items(): BelongsToMany
     {
@@ -26,4 +26,15 @@ class Record extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function statusList(): array
+    {
+        return [
+            'pending'   => 'Pendente',
+            'accepted'  => 'Aceito',
+            'printed'   => 'Impresso',
+            'delivered' => 'Entregue',
+        ];
+    }
+
 }

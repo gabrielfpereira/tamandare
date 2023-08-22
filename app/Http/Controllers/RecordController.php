@@ -6,7 +6,7 @@ use App\Http\Requests\StoreRecordRequest;
 use App\Models\{Item, Record, Student};
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\{RedirectResponse, Response};
+use Illuminate\Http\{RedirectResponse, Request , Response};
 
 class RecordController extends Controller
 {
@@ -91,5 +91,28 @@ class RecordController extends Controller
         $pdf = Pdf::loadView('records.print.record', compact('record'));
 
         return $pdf->stream();
+    }
+
+    public function edit(Record $record): View
+    {
+        $record = Record::query()
+                        ->with('student')
+                        ->with('items')
+                        ->find($record->id);
+
+        return view('records.edit', compact('record'));
+    }
+
+    public function update(Record $record, Request $request): RedirectResponse
+    {
+        $this->authorize('update', $record);
+
+        $data = $request->validate([
+            'status' => 'required',
+        ]);
+
+        $record->update($data);
+
+        return redirect()->route('records.index');
     }
 }

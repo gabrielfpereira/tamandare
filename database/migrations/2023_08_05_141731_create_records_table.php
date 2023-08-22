@@ -16,6 +16,7 @@ return new class () extends Migration {
             $table->string('type');
             $table->foreignId('user_id')->cascadeOnDelete();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

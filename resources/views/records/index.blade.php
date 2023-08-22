@@ -45,6 +45,10 @@
                                     </th>
 
                                     <th scope="col" class="px-6 py-3">
+                                        Status
+                                    </th>
+
+                                    <th scope="col" class="px-6 py-3">
                                         Criação
                                     </th>
                                     
@@ -69,11 +73,18 @@
                                     </th>
 
                                     <th scope="col" class="px-6 py-3">
+                                        {{ $record->statusList()[$record->status] }}
+                                    </th>
+
+                                    <th scope="col" class="px-6 py-3">
                                         {{ $record->created_at->format('d/m/Y') }}
                                     </th>
                                     
                                     <td class="px-6 py-4">
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                                        @can('update', $record)
+                                            <a href="{{ route('records.edit', $record) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                                            
+                                        @endcan
                                         
                                         @can('delete', $record)
                                             <form  action="{{ route('records.destroy', $record)}}" method="POST">
