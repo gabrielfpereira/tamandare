@@ -14,4 +14,9 @@ class RecordPolicy
         return $user->id === $record->user->id;
     }
 
+    public function update(User $user, Record $record): bool
+    {
+        return $user->id === $record->user->id;
+    }
+
 }
