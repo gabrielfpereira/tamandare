@@ -1,13 +1,10 @@
 <?php
 
-use App\Models\Item;
-use App\Models\User;
+use App\Models\{Item, User};
 
-use function Pest\Laravel\actingAs;
-use function Pest\Laravel\get;
-use function Pest\Laravel\put;
+use function Pest\Laravel\{actingAs, get, put};
 
-it('should be able edit a item of record', function (){
+it('should be able edit a item of record', function () {
     $user = User::factory()->create();
     $item = Item::factory()->create();
 
@@ -22,7 +19,7 @@ it('should be able edit a item of record', function (){
     expect($item->name)->toBe('Test');
 });
 
-it('should be able see form to edit a item of record', function (){
+it('should be able see form to edit a item of record', function () {
     $user = User::factory()->create();
     $item = Item::factory()->create();
 
@@ -31,7 +28,7 @@ it('should be able see form to edit a item of record', function (){
     get(route('items.edit', $item))->assertOk();
 });
 
-it('should not be able to edit a item with invalid data', function (){
+it('should not be able to edit a item with invalid data', function () {
     $user = User::factory()->create();
     $item = Item::factory()->create(['name' => 'My Item']);
 

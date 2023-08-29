@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\{RedirectResponse, Request};
 
 class ItemController extends Controller
 {
@@ -37,13 +36,20 @@ class ItemController extends Controller
         return view('items.edit', compact('item'));
     }
 
-    public function update(Request $request, Item $item) : RedirectResponse
+    public function update(Request $request, Item $item): RedirectResponse
     {
         $request->validate([
             'name' => 'required',
         ]);
-        
+
         $item->update($request->all());
+
+        return to_route('items.index');
+    }
+
+    public function destroy(Item $item): RedirectResponse
+    {
+        $item->delete();
 
         return to_route('items.index');
     }
