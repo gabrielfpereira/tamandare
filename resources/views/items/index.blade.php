@@ -38,8 +38,12 @@
                                     </th>
                                     
                                     <td class="px-6 py-4">
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Excluir</a>
+                                        <a href="{{ route('items.edit', $item) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                                        <form action="{{ route('items.destroy', $item) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button onclick="submitForm(event.target.parentElement)" type="button" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Excluir</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -55,4 +59,18 @@
             </div>
         </div>
     </div>
+
+    <x-delete-modal />
+
+    @push('js')
+        <script>
+            function submitForm(e){
+                e.target.preventDefault
+                
+                document.getElementById('confirm-delete').addEventListener('click', function(){
+                    e.submit()
+                })
+            }
+        </script>
+    @endpush
 </x-app-layout>

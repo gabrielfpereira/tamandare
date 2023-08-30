@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\{RedirectResponse, Request};
 
 class ItemController extends Controller
 {
@@ -28,5 +29,28 @@ class ItemController extends Controller
         Item::create($request->all());
 
         return redirect()->route('items.index');
+    }
+
+    public function edit(Item $item): View
+    {
+        return view('items.edit', compact('item'));
+    }
+
+    public function update(Request $request, Item $item): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $item->update($request->all());
+
+        return to_route('items.index');
+    }
+
+    public function destroy(Item $item): RedirectResponse
+    {
+        $item->delete();
+
+        return to_route('items.index');
     }
 }
